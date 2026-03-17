@@ -59,3 +59,22 @@ for material, material_quantity in materials_used.items():
         print(material_quantity + " " + material)
 
     i += 1
+
+# Output total materials
+
+total_materials_used = {}
+
+print("TOTAL MATERIALS:", end=" ")
+
+for material, material_quantity in materials_used.items():
+    
+
+i = 0
+
+for material, material_quantity in materials_used.items():
+    if i < len(materials_used) - 1:
+        print(material_quantity + " " + material, end=", ")
+    else:
+        print(material_quantity + " " + material)
+
+    i += 1
