@@ -32,7 +32,7 @@ requested_products = input("Enter list of products: ")
 
 materials_used = {}
 
-for product_request in requested_products.split(', '):
+def get_materials (materials, product_request):
     quantity = product_request.split(' ')[0]
     product = product_request.split(' ')[1]
 
@@ -42,32 +42,16 @@ for product_request in requested_products.split(', '):
             material = material_info.split(' ')[1]
 
             if material in materials_used:
-                materials_used[material] = str(int(materials_used[material]) + int(material_quantity))
+                materials[material] = str(int(materials[material]) + int(material_quantity))
             else:
-                materials_used[material] = material_quantity
+                materials[material] = material_quantity
+
+for product_request in requested_products.split(', '):
+    get_materials(materials_used, product_request)
 
 # Output materials
 
 print("MATERIALS:", end=" ")
-
-i = 0
-
-for material, material_quantity in materials_used.items():
-    if i < len(materials_used) - 1:
-        print(material_quantity + " " + material, end=", ")
-    else:
-        print(material_quantity + " " + material)
-
-    i += 1
-
-# Output total materials
-
-total_materials_used = {}
-
-print("TOTAL MATERIALS:", end=" ")
-
-for material, material_quantity in materials_used.items():
-    
 
 i = 0
 
