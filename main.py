@@ -32,7 +32,7 @@ requested_products = input("Enter list of products: ")
 
 materials_used = {}
 
-def get_materials (materials, product_request):
+def get_materials(materials, product_request, recursive):
     quantity = product_request.split(' ')[0]
     product = product_request.split(' ')[1]
 
@@ -46,8 +46,11 @@ def get_materials (materials, product_request):
             else:
                 materials[material] = material_quantity
 
+            if recursive and (material in materials_list):
+                get_materials(materials, material_quantity + " " + material, recursive)
+
 for product_request in requested_products.split(', '):
-    get_materials(materials_used, product_request)
+    get_materials(materials_used, product_request, False)
 
 # Output materials
 
