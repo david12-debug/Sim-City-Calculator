@@ -41,13 +41,14 @@ def get_materials(materials, product_request, recursive):
             material_quantity = material_info.split(' ')[0]
             material = material_info.split(' ')[1]
 
-            if material in materials_used:
-                materials[material] = str(int(materials[material]) + int(material_quantity))
-            else:
-                materials[material] = material_quantity
-
             if recursive and (material in materials_list):
                 get_materials(materials, material_quantity + " " + material, recursive)
+            else:
+                if material in materials_used:
+                    materials[material] = str(int(materials[material]) + int(material_quantity))
+                else:
+                    materials[material] = material_quantity
+
 
 for product_request in requested_products.split(', '):
     get_materials(materials_used, product_request, False)
