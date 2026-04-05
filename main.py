@@ -22,16 +22,6 @@ materials_list = {
     'glue':['1 plastic', '2 flask'],
 }
 
-# Print products available to manufacture
-print("List of products: ")
-print(", ".join(materials_list))
-
-requested_products = input("Enter list of products: ")
-
-# Loop through each product, and keep track of materials
-
-materials_used = {}
-
 def get_materials(materials, product_request, recursive):
     quantity = product_request.split(' ')[0]
     product = product_request.split(' ')[1]
@@ -44,25 +34,48 @@ def get_materials(materials, product_request, recursive):
             if recursive and (material in materials_list):
                 get_materials(materials, material_quantity + " " + material, recursive)
             else:
-                if material in materials_used:
+                if material in materials:
                     materials[material] = str(int(materials[material]) + int(material_quantity))
                 else:
                     materials[material] = material_quantity
 
+def get_materials_used(materials, requested_products, recursive):
+    for product_request in requested_products.split(', '):
+        get_materials(materials, product_request, recursive)
 
-for product_request in requested_products.split(', '):
-    get_materials(materials_used, product_request, False)
+def output_materials (materials_used):
+    i = 0
+
+    for material, material_quantity in materials_used.items():
+        if i < len(materials_used) - 1:
+            print(material_quantity + " " + material, end=", ")
+        else:
+            print(material_quantity + " " + material)
+
+        i += 1
+
+# Print products available to manufacture
+print("List of products: ")
+print(", ".join(materials_list))
+
+requested_products = input("Enter list of products: ")
+
+# Loop through each product, and keep track of materials
+materials_used = {}
+
+get_materials_used(materials_used, requested_products, False)
 
 # Output materials
-
 print("MATERIALS:", end=" ")
 
-i = 0
+output_materials(materials_used)
 
-for material, material_quantity in materials_used.items():
-    if i < len(materials_used) - 1:
-        print(material_quantity + " " + material, end=", ")
-    else:
-        print(material_quantity + " " + material)
+# Loop through each product recursively
+total_materials_used = {}
 
-    i += 1
+get_materials_used(total_materials_used, requested_products, True)
+
+# Output materials
+print("TOTAL MATERIALS:", end=" ")
+
+output_materials(total_materials_used)
